@@ -43,8 +43,8 @@ public class TestRunner
     @Parameters({ "browser", "version", "platform" })
     public void setUpClass(String browser, String version, String platform) throws Exception
     {
-        String username = System.getenv("LT_USERNAME") == null ? "himanshujlambdatest" : System.getenv("LT_USERNAME");
-        String accesskey = System.getenv("LT_ACCESS_KEY") == null ? "s36wNWEKC2mnUe1E0D4k8835V0mIC2KRpCFymPEuPmM03wRszH" : System.getenv("LT_ACCESS_KEY");
+        String username = System.getenv("LT_USERNAME") == null ? "LT_USERNAME" : System.getenv("LT_USERNAME");
+        String accesskey = System.getenv("LT_ACCESS_KEY") == null ? "LT_ACCESS_KEY" : System.getenv("LT_ACCESS_KEY");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", browser);
