@@ -1,79 +1,361 @@
-# Cucumber-TestNG-Sample
-![Cucumber](https://opengraph.githubassets.com/a6551e005019ff29f0d2590c8f45e67d9c6c7bc8b4fa28b451a1ababa1361421/LambdaTest/cucumber-testng-sample)
+<img height="100" alt="hypertest_logo" src="https://user-images.githubusercontent.com/1688653/159473714-384e60ba-d830-435e-a33f-730df3c3ebc6.png">
 
-### Prerequisites
-1. Install and set environment variable for java.
-    * Windows - https://www.oracle.com/java/technologies/downloads/
-    * Linux - ```  sudo apt-get install openjdk-8-jre  ```
-    * MacOS - Java should already be present on Mac OS X by default.
-2. Install and set environment varibale for Maven.
-    * Windows - https://maven.apache.org/install.html
-    * Linux/ MacOS -  [Homebrew](http://brew.sh/) (Easier)
-    ```
-     install maven
-    ```
-    
-### Run your First Test
-1. Clone the Cucumber-TestNG-Sample repository. 
+HyperExecute is a smart test orchestration platform to run end-to-end Selenium tests at the fastest speed possible. HyperExecute lets you achieve an accelerated time to market by providing a test infrastructure that offers optimal speed, test orchestration, and detailed execution logs.
+
+The overall experience helps teams test code and fix issues at a much faster pace. HyperExecute is configured using a YAML file. Instead of moving the Hub close to you, HyperExecute brings the test scripts close to the Hub!
+
+* <b>HyperExecute HomePage</b>: https://www.lambdatest.com/hyperexecute
+* <b>Lambdatest HomePage</b>: https://www.lambdatest.com
+* <b>LambdaTest Support</b>: [support@lambdatest.com](mailto:support@lambdatest.com)
+
+To know more about how HyperExecute does intelligent Test Orchestration, do check out [HyperExecute Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/)
+
+# How to run Selenium automation tests on HyperExecute (using Cucumber framework)
+
+* [Pre-requisites](#pre-requisites)
+   - [Download Concierge](#download-concierge)
+   - [Configure Environment Variables](#configure-environment-variables)
+
+* [Matrix Execution with Cucumber](#matrix-execution-with-cucumber)
+   - [Core](#core)
+   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
+   - [Post Steps](#post-steps)
+   - [Artefacts Management](#artefacts-management)
+   - [Test Execution](#test-execution)
+
+* [Auto-Split Execution with Cucumber](#auto-split-execution-with-cucumber)
+   - [Core](#core-1)
+   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
+   - [Post Steps](#post-steps-1)
+   - [Artefacts Management](#artefacts-management-1)
+   - [Test Execution](#test-execution-1)
+
+* [Secrets Management](#secrets-management)
+* [Navigation in Automation Dashboard](#navigation-in-automation-dashboard)
+
+# Pre-requisites
+
+Before using HyperExecute, you have to download Concierge CLI corresponding to the host OS. Along with it, you also need to export the environment variables *LT_USERNAME* and *LT_ACCESS_KEY* that are available in the [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
+
+## Download Concierge
+
+Concierge is a CLI for interacting and running the tests on the HyperExecute Grid. Concierge provides a host of other useful features that accelerate test execution. In order to trigger tests using Concierge, you need to download the Concierge binary corresponding to the platform (or OS) from where the tests are triggered:
+
+Also, it is recommended to download the binary in the project's parent directory. Shown below is the location from where you can download the Concierge binary:
+
+* Mac: https://downloads.lambdatest.com/concierge/darwin/concierge
+* Linux: https://downloads.lambdatest.com/concierge/linux/concierge
+* Windows: https://downloads.lambdatest.com/concierge/windows/concierge.exe
+
+## Configure Environment Variables
+
+Before the tests are run, please set the environment variables LT_USERNAME & LT_ACCESS_KEY from the terminal. The account details are available on your [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile) page.
+
+For macOS:
+
+```bash
+export LT_USERNAME=LT_USERNAME
+export LT_ACCESS_KEY=LT_ACCESS_KEY
 ```
-git clone https://github.com/LambdaTest/cucumber-testng-sample
+
+For Linux:
+
+```bash
+export LT_USERNAME=LT_USERNAME
+export LT_ACCESS_KEY=LT_ACCESS_KEY
 ```
-2. Next get into Cucumber-TestNG-Sample folder, and import Lamabdatest Credentials. You can get these from lambdatest automation dashboard.
-   <p align="center">
-   <b>For Linux/macOS:</b>:
- 
+
+For Windows:
+
+```bash
+set LT_USERNAME=LT_USERNAME
+set LT_ACCESS_KEY=LT_ACCESS_KEY
 ```
-export LT_USERNAME="YOUR_USERNAME"
-export LT_ACCESS_KEY="YOUR ACCESS KEY"
+
+# Matrix Execution with Cucumber
+
+Matrix-based test execution is used for running the same tests across different test (or input) combinations. The Matrix directive in HyperExecute YAML file is a *key:value* pair where value is an array of strings.
+
+Also, the *key:value* pairs are opaque strings for HyperExecute. For more information about matrix multiplexing, check out the [Matrix Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#matrix-based-build-multiplexing)
+
+### Core
+
+In the current example, matrix YAML file (*yaml/cucumber_hyperexecute_matrix_sample.yaml*) in the repo contains the following configuration:
+
+```yaml
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
 ```
-<p align="center">
-   <b>For Windows:</b>
 
+Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
+ 
+The target platform is set to Mac. Please set the *[runson]* key to *[win]* if the tests have to be executed on the macOS platform.
+
+```yaml
+runson: mac
 ```
-set LT_USERNAME="YOUR_USERNAME"
-set LT_ACCESS_KEY="YOUR ACCESS KEY"
+
+The *matrix* constitutes of the following entries - *cucumbertag*. The entries represent the scenario names in the feature files located in *src/main/java/Features*.
+
+```yaml
+matrix:
+  cucumbertag: ["@SeleniumPlayground", "@ToDo",
+                "@BingSearch", "@LambdaTestBlogSearch"]
 ```
-Step 3. Make sure to install the mandatory Selenium dependencies for Maven by running the below command.
+
+The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The Maven command *mvn test* is used to run tests located in the current project. In the current project, parallel execution is achieved at the *class* level. The *maven.repo.local* parameter in Maven is used for overriding the location where the dependent Maven packages are downloaded. The *cucumber.options* parameter is used for filtering tests at the *scenario* level.
+
+```yaml
+testSuites:
+  - mvn test -Dmaven.repo.local=$CACHE_DIR -Dcucumber.options="--tags $cucumbertag"
 ```
-mvn compile
-mvn versions:display-dependency-updates
+
+### Pre Steps and Dependency Caching
+
+Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories. The directory *m2_cache_dir* is created in the project's root directory.
+
+```yaml
+env:
+  CACHE_DIR: ~/m2_cache_dir
+
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
 ```
-### Run Test
-Use the command below from the root of the project to run single tests.
+
+Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
+
+```yaml
+shell: bash
+
+pre:
+  - mkdir ~/m2_cache_dir
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 ```
-mvn test
+
+### Post Steps
+
+Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/cucumber_hyperexecute_matrix_sample.yaml*
+
+```yaml
+post:
+  - cat yaml/cucumber_hyperexecute_matrix_sample.yaml
 ```
-### Terminal Result
-screenshots of the output :
-    
-![altext](https://github.com/keshavissar001/images/blob/master/CucumberResult1.png)
 
-![altext](https://github.com/keshavissar001/images/blob/master/CucumberResult2.png)
-##  Testing Locally Hosted or Privately Hosted Projects
+### Artefacts Management
 
-To help you perform cross browser testing of your locally stored web pages, LambdaTest provides an SSH(Secure Shell) tunnel connection with the name Lambda Tunnel. With Lambda Tunnel, you can test your locally hosted files before you make them live over the internet. You could even perform cross browser testing from different IP addresses belonging to various geographic locations. You can also use LambdaTest Tunnel to test web-apps and websites that are permissible inside your corporate firewall.
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
 
-* Set tunnel value to True in test capabilities
-> OS specific instructions to download and setup tunnel binary can be found at the following links.
->    - [Windows](https://www.lambdatest.com/support/docs/display/TD/Local+Testing+For+Windows)
->    - [Mac](https://www.lambdatest.com/support/docs/display/TD/Local+Testing+For+MacOS)
->    - [Linux](https://www.lambdatest.com/support/docs/display/TD/Local+Testing+For+Linux)
+The *uploadArtefacts* directive informs HyperExecute to upload artefacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directories that contain the XML and JSON reports (i.e. *target/surefire-reports/testng-results.xml* and *target/surefire-reports/testng-results.xml*) directory.
 
-After setting tunnel you can also see the active tunnel in our LambdaTest dashboard:
+```yaml
+mergeArtifacts: true
 
+uploadArtefacts:
+  - name: XmlReports
+    path:
+      - target/surefire-reports/testng-results.xml
+  - name: JsonReports
+    path:
+      - target/cucumber-reports/CucumberTestReport.json
+```
 
-![tn](https://github.com/Apoorvlt/test/blob/master/tn.PNG)
+HyperExecute also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on Artefacts button corresponding to the associated TestID.
 
-### Important Note:
-Some Safari & IE browsers, doesn't support automatic resolution of the URL string "localhost". Therefore if you test on URLs like "http://localhost/" or "http://localhost:8080" etc, you would get an error in these browsers. A possible solution is to use "localhost.lambdatest.com" or replace the string "localhost" with machine IP address. For example if you wanted to test "http://localhost/dashboard" or, and your machine IP is 192.168.2.6 you can instead test on "http://192.168.2.6/dashboard" or "http://localhost.lambdatest.com/dashboard".
+<img width="1425" alt="cucumber_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/159763873-9fc8df54-f07d-4ae5-aa13-1dcd4719146c.png">
 
-## About LambdaTest
+Now, you can download the artefacts by clicking on the Download button as shown below:
 
-[LambdaTest](https://www.lambdatest.com/) is a cloud based selenium grid infrastructure that can help you run automated cross browser compatibility tests on 2000+ different browser and operating system environments. LambdaTest supports all programming languages and frameworks that are supported with Selenium, and have easy integrations with all popular CI/CD platforms. It's a perfect solution to bring your [selenium automation testing](https://www.lambdatest.com/selenium-automation) to cloud based infrastructure that not only helps you increase your test coverage over multiple desktop and mobile browsers, but also allows you to cut down your test execution time by running tests on parallel.
+<img width="1425" alt="cucumber_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/159763897-ad61b350-2196-4292-a7e1-5adbf698b02b.png">
 
-### Resources
+## Test Execution
 
-##### [SeleniumHQ Documentation](http://www.seleniumhq.org/docs/)
-##### [Cucumber Documentation](https://cucumber.io/docs)
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artefacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
+```bash
+./concierge --config yaml/cucumber_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
+```
 
+Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution:
+
+<img width="1414" alt="cucumber_matrix_execution" src="https://user-images.githubusercontent.com/1688653/159763873-9fc8df54-f07d-4ae5-aa13-1dcd4719146c.png">
+
+Shown below is the execution screenshot when the YAML file is triggered from the terminal:
+
+<img width="1413" alt="cucumber_cli1_execution" src="https://user-images.githubusercontent.com/1688653/159763909-305b13b7-df13-43de-b115-09565387edce.png">
+
+<img width="1101" alt="cucumber_cli2_execution" src="https://user-images.githubusercontent.com/1688653/159763911-61ba72e1-ed47-40c8-914a-2a8e3ab8db2a.png">
+
+## Auto-Split Execution with Cucumber
+
+Auto-split execution mechanism lets you run tests at predefined concurrency and distribute the tests over the available infrastructure. Concurrency can be achieved at different levels - file, module, test suite, test, scenario, etc.
+
+For more information about auto-split execution, check out the [Auto-Split Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#smart-auto-test-splitting)
+
+### Core
+
+Auto-split YAML file (*yaml/cucumber_hyperexecute_autosplit_sample.yaml*) in the repo contains the following configuration:
+
+```yaml
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
+```
+
+Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
+ 
+The *runson* key determines the platform (or operating system) on which the tests are executed. Here we have set the target OS as Windows.
+
+```yaml
+runson: mac
+```
+
+Auto-split is set to true in the YAML file.
+
+```yaml
+ autosplit: true
+```
+
+*retryOnFailure* is set to true, instructing HyperExecute to retry failed command(s). The retry operation is carried out till the number of retries mentioned in *maxRetries* are exhausted or the command execution results in a *Pass*. In addition, the concurrency (i.e. number of parallel sessions) is set to 4.
+
+```yaml
+retryOnFailure: true
+maxRetries: 5
+concurrency: 4
+```
+
+### Pre Steps and Dependency Caching
+
+Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories. The directory *m2_cache_dir* is created in the project's root directory.
+
+```yaml
+env:
+  CACHE_DIR: ~/m2_cache_dir
+
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
+```
+
+Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
+
+```yaml
+shell: bash
+
+pre:
+  - mkdir ~/m2_cache_dir
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
+```
+
+### Post Steps
+
+Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/cucumber_hyperexecute_autosplit_sample.yaml*
+
+```yaml
+post:
+  - cat yaml/cucumber_hyperexecute_autosplit_sample.yaml
+```
+
+The *testDiscovery* directive contains the command that gives details of the mode of execution, along with detailing the command that is used for test execution. Here, we are fetching the list of class names that would be further passed in the *testRunnerCommand*
+
+```yaml
+testDiscovery:
+  type: raw
+  mode: static
+  command: grep -rni 'src/main/java/Features' -e '@' --include=\*.feature | sed 's/.*@//' | sed 's/^/@/'
+```
+
+Running the above command on the terminal will give a list of scenarios present in the *feature* files:
+
+* @BingSearch
+* @ToDo
+* @LambdaTestBlogSearch
+* @SeleniumPlayground
+
+The *testRunnerCommand* contains the command that is used for triggering the test. The output fetched from the *testDiscoverer* command acts as an input to the *testRunner* command.
+
+```yaml
+testRunnerCommand: mvn test -Dmaven.repo.local=$CACHE_DIR -Dcucumber.options="--tags $test"
+```
+
+### Artefacts Management
+
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
+
+The *uploadArtefacts* directive informs HyperExecute to upload artefacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directories that contain the XML and JSON reports (i.e. *target/surefire-reports/testng-results.xml* and *target/surefire-reports/testng-results.xml*) directory.
+
+```yaml
+mergeArtifacts: true
+
+uploadArtefacts:
+  - name: XmlReports
+    path:
+      - target/surefire-reports/testng-results.xml
+  - name: JsonReports
+    path:
+      - target/cucumber-reports/CucumberTestReport.json
+```
+
+HyperExecute also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on Artefacts button corresponding to the associated TestID.
+
+<img width="1425" alt="cucumber_autosplit_artefacts_1" src="https://user-images.githubusercontent.com/1688653/159763062-3abacd29-293e-440f-b3ad-d6cb86e24f3b.png">
+
+Now, you can download the artefacts by clicking on the Download button as shown below:
+
+<img width="1425" alt="cucumber_autosplit_artefacts_2" src="https://user-images.githubusercontent.com/1688653/159763091-e82dbb95-ad2d-4f3e-b8d5-135ae47f14ac.png">
+
+### Test Execution
+
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artefacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+
+```bash
+./concierge --config yaml/cucumber_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
+```
+
+Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution
+
+<img width="1414" alt="cucumber_autosplit_execution" src="https://user-images.githubusercontent.com/1688653/159763062-3abacd29-293e-440f-b3ad-d6cb86e24f3b.png">
+
+Shown below is the execution screenshot when the YAML file is triggered from the terminal:
+
+<img width="1412" alt="cucumber_autosplit_cli1_execution" src="https://user-images.githubusercontent.com/1688653/159763098-bbb5af76-bf4f-42f3-a4f0-fc1dda8347b3.png">
+
+<img width="1408" alt="cucumber_autosplit_cli2_execution" src="https://user-images.githubusercontent.com/1688653/159763105-58c49a6b-68e2-4e1e-a413-b03dc23ad03d.png">
+
+## Secrets Management
+
+In case you want to use any secret keys in the YAML file, the same can be set by clicking on the *Secrets* button the dashboard.
+
+<img width="703" alt="cucumber_secrets_key_1" src="https://user-images.githubusercontent.com/1688653/152540968-90e4e8bc-3eb4-4259-856b-5e513cbd19b5.png">
+
+Now create a *secret* key that you can use in the HyperExecute YAML file.
+
+<img width="359" alt="cucumber_management_1" src="https://user-images.githubusercontent.com/1688653/153250877-e58445d1-2735-409a-970d-14253991c69e.png">
+
+All you need to do is create an environment variable that uses the secret key:
+
+```yaml
+env:
+  PAT: ${{ .secrets.testKey }}
+```
+
+## Navigation in Automation Dashboard
+
+HyperExecute lets you navigate from/to *Test Logs* in Automation Dashboard from/to *HyperExecute Logs*. You also get relevant get relevant Selenium test details like video, network log, commands, Exceptions & more in the Dashboard. Effortlessly navigate from the automation dashboard to HyperExecute logs (and vice-versa) to get more details of the test execution.
+
+Shown below is the HyperExecute Automation dashboard which also lists the tests that were executed as a part of the test suite:
+
+<img width="1429" alt="cucumber_hypertest_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/159763873-9fc8df54-f07d-4ae5-aa13-1dcd4719146c.png">
+
+Here is a screenshot that lists the automation test that was executed on the HyperExecute grid:
+
+<img width="1429" alt="cucumber_testing_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/159763904-c5c6e1f2-394b-48b0-aadf-541a7c9dbeae.png">
+
+## We are here to help you :)
+* LambdaTest Support: [support@lambdatest.com](mailto:support@lambdatest.com)
+* HyperExecute HomePage: https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/
+* Lambdatest HomePage: https://www.lambdatest.com
+
+## License
+Licensed under the [MIT license](LICENSE).
