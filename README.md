@@ -20,14 +20,14 @@ To know more about how HyperExecute does intelligent Test Orchestration, do chec
    - [Core](#core)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
    - [Post Steps](#post-steps)
-   - [Artefacts Management](#artefacts-management)
+   - [Artifacts Management](#artifacts-management)
    - [Test Execution](#test-execution)
 
 * [Auto-Split Execution with Cucumber](#auto-split-execution-with-cucumber)
    - [Core](#core-1)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
    - [Post Steps](#post-steps-1)
-   - [Artefacts Management](#artefacts-management-1)
+   - [Artifacts Management](#artifacts-management-1)
    - [Test Execution](#test-execution-1)
 
 * [Secrets Management](#secrets-management)
@@ -90,10 +90,10 @@ testSuiteStep: 150
 
 Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
  
-The target platform is set to Mac. Please set the *[runson]* key to *[win]* if the tests have to be executed on the macOS platform.
+The target platform is set to Win. Please set the *[runson]* key to *[mac]* if the tests have to be executed on the macOS platform.
 
 ```yaml
-runson: mac
+runson: win
 ```
 
 The *matrix* constitutes of the following entries - *cucumbertag*. The entries represent the scenario names in the feature files located in *src/main/java/Features*.
@@ -108,7 +108,7 @@ The *testSuites* object contains a list of commands (that can be presented in an
 
 ```yaml
 testSuites:
-  - mvn test -Dmaven.repo.local=$CACHE_DIR -Dcucumber.options="--tags $cucumbertag"
+  - mvn test `-Dmaven.repo.local=$CACHE_DIR `-Dcucumber.options="--tags $cucumbertag"
 ```
 
 ### Pre Steps and Dependency Caching
@@ -117,7 +117,7 @@ Dependency caching is enabled in the YAML file to ensure that the package depend
 
 ```yaml
 env:
-  CACHE_DIR: ~/m2_cache_dir
+  CACHE_DIR: m2_cache_dir
 
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
@@ -127,10 +127,8 @@ cacheDirectories:
 Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
 
 ```yaml
-shell: bash
-
 pre:
-  - mkdir ~/m2_cache_dir
+  - mkdir m2_cache_dir
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 ```
 
@@ -143,11 +141,11 @@ post:
   - cat yaml/cucumber_hyperexecute_matrix_sample.yaml
 ```
 
-### Artefacts Management
+### Artifacts Management
 
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
 
-The *uploadArtefacts* directive informs HyperExecute to upload artefacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directories that contain the XML and JSON reports (i.e. *target/surefire-reports/testng-results.xml* and *target/surefire-reports/testng-results.xml*) directory.
+The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directories that contain the XML and JSON reports (i.e. *target/surefire-reports/testng-results.xml* and *target/surefire-reports/testng-results.xml*) directory.
 
 ```yaml
 mergeArtifacts: true
@@ -161,17 +159,17 @@ uploadArtefacts:
       - target/cucumber-reports/CucumberTestReport.json
 ```
 
-HyperExecute also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on Artefacts button corresponding to the associated TestID.
+HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
 
-<img width="1425" alt="cucumber_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/159763873-9fc8df54-f07d-4ae5-aa13-1dcd4719146c.png">
+<img width="1425" alt="cucumber_matrix_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160452786-e60e6ee2-b0e9-4248-81aa-ca07ecbfdd1f.png">
 
-Now, you can download the artefacts by clicking on the Download button as shown below:
+Now, you can download the artifacts by clicking on the Download button as shown below:
 
-<img width="1425" alt="cucumber_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/159763897-ad61b350-2196-4292-a7e1-5adbf698b02b.png">
+<img width="1425" alt="cucumber_matrix_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160452801-88341e4e-ac9b-41f7-bd21-18f363ef16f5.png">
 
 ## Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artefacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
 ```bash
 ./concierge --config yaml/cucumber_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
@@ -179,7 +177,7 @@ The CLI option *--config* is used for providing the custom HyperExecute YAML fil
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution:
 
-<img width="1414" alt="cucumber_matrix_execution" src="https://user-images.githubusercontent.com/1688653/159763873-9fc8df54-f07d-4ae5-aa13-1dcd4719146c.png">
+<img width="1414" alt="cucumber_matrix_execution" src="https://user-images.githubusercontent.com/1688653/160452786-e60e6ee2-b0e9-4248-81aa-ca07ecbfdd1f.png">
 
 Shown below is the execution screenshot when the YAML file is triggered from the terminal:
 
@@ -208,7 +206,7 @@ Global timeout, testSuite timeout, and testSuite timeout are set to 150 minutes.
 The *runson* key determines the platform (or operating system) on which the tests are executed. Here we have set the target OS as Windows.
 
 ```yaml
-runson: mac
+runson: win
 ```
 
 Auto-split is set to true in the YAML file.
@@ -231,7 +229,7 @@ Dependency caching is enabled in the YAML file to ensure that the package depend
 
 ```yaml
 env:
-  CACHE_DIR: ~/m2_cache_dir
+  CACHE_DIR: m2_cache_dir
 
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
@@ -241,10 +239,8 @@ cacheDirectories:
 Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the Maven packages are downloaded in the *m2_cache_dir*. To prevent test execution at the *pre* stage, the *maven.test.skip* parameter is set to *true* so that only packages are downloaded and no test execution is performed.
 
 ```yaml
-shell: bash
-
 pre:
-  - mkdir ~/m2_cache_dir
+  - mkdir m2_cache_dir
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 ```
 
@@ -276,14 +272,14 @@ Running the above command on the terminal will give a list of scenarios present 
 The *testRunnerCommand* contains the command that is used for triggering the test. The output fetched from the *testDiscoverer* command acts as an input to the *testRunner* command.
 
 ```yaml
-testRunnerCommand: mvn test -Dmaven.repo.local=$CACHE_DIR -Dcucumber.options="--tags $test"
+testRunnerCommand: mvn test `-Dmaven.repo.local=$CACHE_DIR `-Dcucumber.options="--tags $test"
 ```
 
-### Artefacts Management
+### Artifacts Management
 
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artefacts and combing artefacts generated under each task.
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
 
-The *uploadArtefacts* directive informs HyperExecute to upload artefacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directories that contain the XML and JSON reports (i.e. *target/surefire-reports/testng-results.xml* and *target/surefire-reports/testng-results.xml*) directory.
+The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directories that contain the XML and JSON reports (i.e. *target/surefire-reports/testng-results.xml* and *target/surefire-reports/testng-results.xml*) directory.
 
 ```yaml
 mergeArtifacts: true
@@ -297,17 +293,17 @@ uploadArtefacts:
       - target/cucumber-reports/CucumberTestReport.json
 ```
 
-HyperExecute also facilitates the provision to download the artefacts on your local machine. To download the artefacts, click on Artefacts button corresponding to the associated TestID.
+HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
 
-<img width="1425" alt="cucumber_autosplit_artefacts_1" src="https://user-images.githubusercontent.com/1688653/159763062-3abacd29-293e-440f-b3ad-d6cb86e24f3b.png">
+<img width="1425" alt="cucumber_autosplit_artefacts_1" src="https://user-images.githubusercontent.com/1688653/160453348-67a416d9-ec37-4467-9a51-1b20484f39f1.png">
 
-Now, you can download the artefacts by clicking on the Download button as shown below:
+Now, you can download the artifacts by clicking on the Download button as shown below:
 
-<img width="1425" alt="cucumber_autosplit_artefacts_2" src="https://user-images.githubusercontent.com/1688653/159763091-e82dbb95-ad2d-4f3e-b8d5-135ae47f14ac.png">
+<img width="1425" alt="cucumber_autosplit_artefacts_2" src="https://user-images.githubusercontent.com/1688653/160453362-aa371377-0d81-4140-8a7a-b6170310ac15.png">
 
 ### Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artefacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
 ```bash
 ./concierge --config yaml/cucumber_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
@@ -315,7 +311,7 @@ The CLI option *--config* is used for providing the custom HyperExecute YAML fil
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hypertest) to check the status of execution
 
-<img width="1414" alt="cucumber_autosplit_execution" src="https://user-images.githubusercontent.com/1688653/159763062-3abacd29-293e-440f-b3ad-d6cb86e24f3b.png">
+<img width="1414" alt="cucumber_autosplit_execution" src="https://user-images.githubusercontent.com/1688653/160453348-67a416d9-ec37-4467-9a51-1b20484f39f1.png">
 
 Shown below is the execution screenshot when the YAML file is triggered from the terminal:
 
@@ -346,7 +342,7 @@ HyperExecute lets you navigate from/to *Test Logs* in Automation Dashboard from/
 
 Shown below is the HyperExecute Automation dashboard which also lists the tests that were executed as a part of the test suite:
 
-<img width="1429" alt="cucumber_hypertest_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/159763873-9fc8df54-f07d-4ae5-aa13-1dcd4719146c.png">
+<img width="1429" alt="cucumber_hypertest_automation_dashboard" src="https://user-images.githubusercontent.com/1688653/160452786-e60e6ee2-b0e9-4248-81aa-ca07ecbfdd1f.png">
 
 Here is a screenshot that lists the automation test that was executed on the HyperExecute grid:
 
