@@ -4,7 +4,7 @@ globalTimeout: 90
 testSuiteTimeout: 90
 testSuiteStep: 90
 
-runson: mac
+runson: win
 
 autosplit: true
 retryOnFailure: true
@@ -14,18 +14,18 @@ concurrency: 5
 
 env:
   # PAT: ${{ .secrets.testKey }}
-  CACHE_DIR: ~/m2_cache_dir
+  CACHE_DIR: m2_cache_dir
 
 # Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
   - $CACHE_DIR
 
-shell: bash
+# shell: bash
 
 pre:
   # Create the Cache directory
-  - mkdir ~/m2_cache_dir
+  - mkdir m2_cache_dir
   # Download and install packages in the CACHE_DIR.
   # Skip execution of the tests in the pre step
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
@@ -51,4 +51,4 @@ testDiscovery:
   #command: grep -rni 'Features' -e 'Feature:' | sed 's/.*://'
   command: grep -rni 'src/main/java/Features' -e '@' --include=\*.feature | sed 's/.*@//' | sed 's/^/@/'
 
-testRunnerCommand: mvn test -Dmaven.repo.local=$CACHE_DIR -Dcucumber.options="--tags $test"
+testRunnerCommand: mvn test `-Dmaven.repo.local=$CACHE_DIR `-Dcucumber.options="--tags $test"

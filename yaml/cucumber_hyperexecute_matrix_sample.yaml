@@ -4,7 +4,7 @@ globalTimeout: 150
 testSuiteTimeout: 150
 testSuiteStep: 150
 
-runson: mac
+runson: win
 retryOnFailure: true
 
 maxRetries: 5
@@ -12,7 +12,7 @@ concurrency: 4
 
 env:
   # PAT: ${{ .secrets.testKey }}
-  CACHE_DIR: ~/m2_cache_dir
+  CACHE_DIR: m2_cache_dir
 
 # Dependency caching for Windows
 cacheKey: '{{ checksum "pom.xml" }}'
@@ -23,11 +23,11 @@ matrix:
   cucumbertag: ["@SeleniumPlayground", "@ToDo",
         "@BingSearch", "@LambdaTestBlogSearch"]
 
-shell: bash
+# shell: bash
 
 pre:
   # Create the Cache directory
-  - mkdir ~/m2_cache_dir
+  - mkdir m2_cache_dir
   # Download and install packages in the CACHE_DIR.
   # Skip execution of the tests in the pre step
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
@@ -46,4 +46,4 @@ uploadArtefacts:
       - target/cucumber-reports/CucumberTestReport.json
 
 testSuites:
-  - mvn test -Dmaven.repo.local=$CACHE_DIR -Dcucumber.options="--tags $cucumbertag"
+  - mvn test `-Dmaven.repo.local=$CACHE_DIR `-Dcucumber.options="--tags $cucumbertag"
