@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="BDD Test Suite" verbose="1"
-	thread-count="5" >
-    <test name="[Test-1] Cucumber test on HyperExecute Grid" annotations="JDK"
-		preserve-order="true">
+<suite name="Demo - Cucumber testing on HyperExecute Grid" verbose="1" thread-count="3" >
+    <test name="[Test-1] Windows: Cucumber test on HyperExecute Grid" preserve-order="true">
         <parameter name="browser" value="Firefox"/>
         <parameter name="version" value="latest"/>
         <parameter name="platform" value="Windows 10"/>
@@ -11,19 +9,17 @@
             <class name="Runner.TestRunner" />
         </classes>
     </test>
-    <test name="[Test-2] Cucumber test on HyperExecute Grid" annotations="JDK"
-		preserve-order="true">
+    <test name="[Test-2] Windows: Cucumber test on HyperExecute Grid" preserve-order="true">
         <parameter name="browser" value="chrome"/>
         <parameter name="version" value="latest"/>
-        <parameter name="platform" value="Windows 10"/>
+        <parameter name="platform" value="Windows 11"/>
         <classes>
             <class name="Runner.TestRunner" />
         </classes>
     </test>
-    <test name="[Test-3] Cucumber test on HyperExecute Grid" annotations="JDK"
-		preserve-order="true">
+    <test name="[Test-3] Windows: Cucumber test on HyperExecute Grid" preserve-order="true">
         <parameter name="browser" value="Microsoft Edge"/>
-        <parameter name="version" value="latest"/>
+        <parameter name="version" value="latest-1"/>
         <parameter name="platform" value="Windows 10"/>
         <classes>
           <class name="Runner.TestRunner" />

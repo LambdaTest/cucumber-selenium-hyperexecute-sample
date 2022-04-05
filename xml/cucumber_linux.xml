@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Demo - Cucumber testing on HyperExecute Grid" verbose="1" thread-count="3" >
+    <test name="[Test-1] Linux: Cucumber test on HyperExecute Grid" preserve-order="true">
+        <parameter name="browser" value="Firefox"/>
+        <parameter name="version" value="latest"/>
+        <parameter name="platform" value="LINUX"/>
+        <classes>
+            <class name="Runner.TestRunner" />
+        </classes>
+    </test>
+    <test name="[Test-2] Linux: Cucumber test on HyperExecute Grid" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <parameter name="version" value="latest-2"/>
+        <parameter name="platform" value="LINUX"/>
+        <classes>
+            <class name="Runner.TestRunner" />
+        </classes>
+    </test>
+    <test name="[Test-3] Linux: Cucumber test on HyperExecute Grid" preserve-order="true">
+        <parameter name="browser" value="Microsoft Edge"/>
+        <parameter name="version" value="latest-2"/>
+        <parameter name="platform" value="LINUX"/>
+        <classes>
+          <class name="Runner.TestRunner" />
+        </classes>
+    </test>
+</suite>

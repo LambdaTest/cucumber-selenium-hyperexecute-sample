@@ -4,7 +4,7 @@ globalTimeout: 90
 testSuiteTimeout: 90
 testSuiteStep: 90
 
-runson: win
+runson: mac
 
 autosplit: true
 retryOnFailure: true
@@ -21,7 +21,7 @@ cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
   - $CACHE_DIR
 
-# shell: bash
+shell: bash
 
 pre:
   # Create the Cache directory
@@ -31,7 +31,7 @@ pre:
   - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
 
 post:
-  - cat yaml/cucumber_hyperexecute_autosplit_sample.yaml
+  - cat yaml/mac/cucumber_hyperexecute_autosplit_sample.yaml
 
 mergeArtifacts: true
 
@@ -43,7 +43,6 @@ uploadArtefacts:
     path:
       - target/cucumber-reports/CucumberTestReport.json
 
-# The below testDiscovery command will give the feature name in the respective feature files
 testDiscovery:
   type: raw
   mode: static
@@ -51,4 +50,4 @@ testDiscovery:
   #command: grep -rni 'Features' -e 'Feature:' | sed 's/.*://'
   command: grep -rni 'src/main/java/Features' -e '@' --include=\*.feature | sed 's/.*@//' | sed 's/^/@/'
 
-testRunnerCommand: mvn test `-Dmaven.repo.local=$CACHE_DIR `-Dcucumber.options="--tags $test"
+testRunnerCommand: mvn test -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dcucumber.options="--tags $test"

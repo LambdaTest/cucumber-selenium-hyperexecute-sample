@@ -30,15 +30,15 @@ import cucumber.api.testng.TestNGCucumberRunner;
 public class TestRunner
 {
     private TestNGCucumberRunner testNGCucumberRunner;
-  
+
     public static RemoteWebDriver connection;
-    
+
     @BeforeClass(alwaysRun = true)
     public void setUpCucumber()
     {
     	 testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
-    
+
     @BeforeMethod(alwaysRun = true)
     @Parameters({ "browser", "version", "platform" })
     public void setUpClass(String browser, String version, String platform) throws Exception
@@ -62,19 +62,19 @@ public class TestRunner
         connection = new RemoteWebDriver(new URL(gridURL), capabilities);
         System.out.println(connection.getSessionId());
 }
- 
+
     @Test(groups = "cucumber", description = "Runs Cucumber Feature", dataProvider = "features")
     public void feature(CucumberFeatureWrapper cucumberFeature)
     {
         testNGCucumberRunner.runCucumber(cucumberFeature.getCucumberFeature());
     }
- 
+
     @DataProvider
     public Object[][] features()
     {
         return testNGCucumberRunner.provideFeatures();
     }
- 
+
     @AfterClass(alwaysRun = true)
     public void tearDownClass() throws Exception
     {

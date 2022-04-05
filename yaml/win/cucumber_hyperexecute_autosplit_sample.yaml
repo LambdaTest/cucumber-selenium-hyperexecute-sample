@@ -1,0 +1,51 @@
+---
+version: 0.1
+globalTimeout: 90
+testSuiteTimeout: 90
+testSuiteStep: 90
+
+runson: win
+
+autosplit: true
+retryOnFailure: true
+
+maxRetries: 5
+concurrency: 5
+
+env:
+  # PAT: ${{ .secrets.testKey }}
+  CACHE_DIR: m2_cache_dir
+
+# Dependency caching for Windows
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - $CACHE_DIR
+
+pre:
+  # Create the Cache directory
+  - mkdir m2_cache_dir
+  # Download and install packages in the CACHE_DIR.
+  # Skip execution of the tests in the pre step
+  - mvn -Dmaven.repo.local=$CACHE_DIR -Dmaven.test.skip=true clean install
+
+post:
+  - cat yaml/win/cucumber_hyperexecute_autosplit_sample.yaml
+
+mergeArtifacts: true
+
+uploadArtefacts:
+  - name: XmlReports
+    path:
+      - target/surefire-reports/testng-results.xml
+  - name: JsonReports
+    path:
+      - target/cucumber-reports/CucumberTestReport.json
+
+testDiscovery:
+  type: raw
+  mode: static
+  #Parallel execution at feature level
+  #command: grep -rni 'Features' -e 'Feature:' | sed 's/.*://'
+  command: grep -rni 'src/main/java/Features' -e '@' --include=\*.feature | sed 's/.*@//' | sed 's/^/@/'
+
+testRunnerCommand: mvn test `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dcucumber.options="--tags $test"
