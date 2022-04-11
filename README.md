@@ -84,7 +84,7 @@ For more information about auto-split execution, check out the [Auto-Split Getti
 
 ### Core
 
-Auto-split YAML file (*yaml/cucumber_hyperexecute_autosplit_sample.yaml*) in the repo contains the following configuration:
+Auto-split YAML file (*yaml/win/cucumber_hyperexecute_autosplit_sample.yaml*) in the repo contains the following configuration:
 
 ```yaml
 globalTimeout: 150
@@ -137,11 +137,11 @@ pre:
 
 ### Post Steps
 
-Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/cucumber_hyperexecute_autosplit_sample.yaml*
+Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/win/cucumber_hyperexecute_autosplit_sample.yaml*
 
 ```yaml
 post:
-  - cat yaml/cucumber_hyperexecute_autosplit_sample.yaml
+  - cat yaml/win/cucumber_hyperexecute_autosplit_sample.yaml
 ```
 
 The *testDiscovery* directive contains the command that gives details of the mode of execution, along with detailing the command that is used for test execution. Here, we are fetching the list of class names that would be further passed in the *testRunnerCommand*
@@ -194,10 +194,10 @@ Now, you can download the artifacts by clicking on the Download button as shown 
 
 ### Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/cucumber_hyperexecute_autosplit_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
 ```bash
-./hyperexecute --config yaml/cucumber_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
+./hyperexecute --config yaml/win/cucumber_hyperexecute_autosplit_sample.yaml --force-clean-artifacts --download-artifacts
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
@@ -218,7 +218,7 @@ Also, the *key:value* pairs are opaque strings for HyperExecute. For more inform
 
 ### Core
 
-In the current example, matrix YAML file (*yaml/cucumber_hyperexecute_matrix_sample.yaml*) in the repo contains the following configuration:
+In the current example, matrix YAML file (*yaml/win/cucumber_hyperexecute_matrix_sample.yaml*) in the repo contains the following configuration:
 
 ```yaml
 globalTimeout: 150
@@ -272,11 +272,11 @@ pre:
 
 ### Post Steps
 
-Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/cucumber_hyperexecute_matrix_sample.yaml*
+Steps (or commands) that need to run after the test execution are listed in the *post* step. In the example, we *cat* the contents of *yaml/win/cucumber_hyperexecute_matrix_sample.yaml*
 
 ```yaml
 post:
-  - cat yaml/cucumber_hyperexecute_matrix_sample.yaml
+  - cat yaml/win/cucumber_hyperexecute_matrix_sample.yaml
 ```
 
 ### Artifacts Management
@@ -307,10 +307,10 @@ Now, you can download the artifacts by clicking on the Download button as shown 
 
 ## Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/cucumber_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/cucumber_hyperexecute_matrix_sample.yaml*). Run the following command on the terminal to trigger the tests in C# files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job. The *--force-clean-artifacts* option force cleans any existing artifacts for the project.
 
 ```bash
-./hyperexecute --config yaml/cucumber_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
+./hyperexecute --config yaml/win/cucumber_hyperexecute_matrix_sample.yaml --force-clean-artifacts --download-artifacts
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
