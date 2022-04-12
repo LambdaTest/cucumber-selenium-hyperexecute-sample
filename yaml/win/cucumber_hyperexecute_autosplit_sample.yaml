@@ -43,7 +43,7 @@ uploadArtefacts:
 
 testDiscovery:
   type: raw
-  mode: static
+  mode: dynamic
   #Parallel execution at feature level
   #command: grep -rni 'Features' -e 'Feature:' | sed 's/.*://'
   command: grep -rni 'src/main/java/Features' -e '@' --include=\*.feature | sed 's/.*@//' | sed 's/^/@/'
