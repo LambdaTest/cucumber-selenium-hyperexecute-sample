@@ -46,6 +46,6 @@ testDiscovery:
   mode: dynamic
   #Parallel execution at feature level
   #command: grep -rni 'Features' -e 'Feature:' | sed 's/.*://'
-  command: grep -rni 'src/main/java/Features' -e '@' --include=\*.feature | sed 's/.*@//' | sed 's/^/@/'
+  command: grep -nri '@' src/main/java/Features --include=\*.feature | sed 's/^.*://'
 
 testRunnerCommand: mvn test `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dcucumber.options="--tags $test"
