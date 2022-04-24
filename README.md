@@ -165,7 +165,7 @@ The *testDiscovery* directive contains the command that gives details of the mod
 testDiscovery:
   type: raw
   mode: static
-  command: grep -rni 'src/main/java/Features' -e '@' --include=\*.feature | sed 's/.*@//' | sed 's/^/@/'
+  command: grep -nri '@' src/main/java/Features --include=\*.feature | sed 's/^.*://'
 ```
 
 Running the above command on the terminal will give a list of scenarios present in the *feature* files:
