@@ -1,11 +1,10 @@
-Feature: DuckDuckGoLTBlog
-  Open DuckDuckGo
-  Search for LambdaTest Blog on the page
-  Check results
+Feature: Add new item to ToDo list
+
 
 @LambdaTestBlogSearch
-Scenario: Search LambdaTest on DuckDuckGo
-    Given that I am on the DuckDuckGo Search Page
-    Then search for LambdaTest Blog
-    Then click on the available result
-    Then compare results
+  Scenario: LambdaTest ToDo Scenario
+    Given user is on home Page
+    When select First Item
+    Then select second item
+    Then add new item
+    Then verify added item
