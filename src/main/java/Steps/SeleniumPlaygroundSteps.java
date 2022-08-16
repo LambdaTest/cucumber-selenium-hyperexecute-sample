@@ -39,7 +39,7 @@ public class SeleniumPlaygroundSteps extends TestRunner
         name.sendKeys("Testing");
         Thread.sleep(2000);
 
-        WebElement email_address = driver.findElement(By.xpath("//input[@name='email']"));
+        WebElement email_address = driver.findElement(By.id("inputEmail4"));
         email_address.sendKeys("testing@testing.com");
         Thread.sleep(2000);
 
