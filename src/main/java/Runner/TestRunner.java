@@ -2,7 +2,6 @@ package Runner;
 
 import java.net.URL;
 
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
@@ -25,7 +24,9 @@ import cucumber.api.testng.TestNGCucumberRunner;
                 "html:target/cucumber-reports/cucumber-pretty",
                 "json:target/cucumber-reports/CucumberTestReport.json",
                 "rerun:target/cucumber-reports/rerun.txt"
-        },plugin = "json:target/cucumber-reports/CucumberTestReport.json")
+        },
+        plugin = {"json:target/cucumber-reports/CucumberTestReport.json","html:target/cucumber-reports","testng:target/cucumber-reports/Cucumber.xml"}
+        )
 
 public class TestRunner
 {

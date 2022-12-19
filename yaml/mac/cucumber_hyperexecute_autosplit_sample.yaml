@@ -40,6 +40,12 @@ uploadArtefacts:
   - name: JsonReports
     path:
       - target/cucumber-reports/CucumberTestReport.json
+  - name: htmlReports
+    path:
+      - target/cucumber-reports/index.html
+  - name: xmlReports
+    path:
+      - target/cucumber-reports/Cucumber.xml
 
 testDiscovery:
   type: raw
