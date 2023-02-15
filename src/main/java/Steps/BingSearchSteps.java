@@ -36,15 +36,15 @@ public class BingSearchSteps extends TestRunner
     @When("^search for LambdaTest$")
     public void click_on_the_text_box()
     {
-        WebElement searchBox = driver.findElement(By.xpath("//input[@id='sb_form_q']"));
+        WebElement searchBox = driver.findElement(By.xpath("//textarea[@id='sb_form_q']"));
         searchBox.sendKeys("LambdaTest");
+        
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(By.id("search_icon")).click();
-        
+        searchBox.sendKeys(Keys.ENTER);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -55,8 +55,7 @@ public class BingSearchSteps extends TestRunner
     @Then("^click on the first result$")
     public void click_on_the_first_result()
     {
-        WebElement secondCheckBox = driver.findElement(By.partialLinkText
-                ("Most Powerful Cross Browser Testing"));
+        WebElement secondCheckBox = driver.findElement(By.linkText("Most Powerful Cross Browser Testing Tool Online"));
         secondCheckBox.click();
         try {
             Thread.sleep(2000);
