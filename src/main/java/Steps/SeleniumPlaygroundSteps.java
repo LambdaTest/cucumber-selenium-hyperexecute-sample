@@ -5,6 +5,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import static org.testng.Assert.assertEquals;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.JavascriptExecutor;
 
 import Runner.TestRunner;
 import cucumber.api.java.en.Given;
@@ -85,8 +88,9 @@ public class SeleniumPlaygroundSteps extends TestRunner
     public void WhenClickSubmitButton() throws InterruptedException
     {
         /* Click on the Submit button */
-        WebElement submit_button = driver.findElement(By.cssSelector(".btn"));
-        submit_button.click();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn"))); 
+        ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
         Thread.sleep(2000);
     }
 
