@@ -29,3 +29,5 @@ testDiscovery:
   command: grep -nri '@' src/main/java/Features --include=\*.feature | sed 's/^.*://'
 
 testRunnerCommand: mvn test `-Dmaven.repo.local=${CACHE_DIR} `-Dcucumber.options="--tags $test"
+
+jobLabel: [selenium-cucumber-java, mac, autosplit-simple]

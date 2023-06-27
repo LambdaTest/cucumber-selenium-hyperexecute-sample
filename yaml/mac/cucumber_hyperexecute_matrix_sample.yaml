@@ -45,3 +45,5 @@ uploadArtefacts:
 
 testSuites:
   - mvn test -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dcucumber.options="--tags $cucumbertag"
+
+jobLabel: [selenium-cucumber-java, mac, matrix]
