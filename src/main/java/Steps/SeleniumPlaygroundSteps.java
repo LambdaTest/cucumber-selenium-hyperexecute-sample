@@ -89,7 +89,7 @@ public class SeleniumPlaygroundSteps extends TestRunner
     {
         /* Click on the Submit button */
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn"))); 
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Submit']")));
         ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
         Thread.sleep(2000);
     }

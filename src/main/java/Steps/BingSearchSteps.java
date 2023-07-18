@@ -37,7 +37,7 @@ public class BingSearchSteps extends TestRunner
     public void click_on_the_text_box()
     {
         WebElement searchBox = driver.findElement(By.xpath("//textarea[@id='sb_form_q']"));
-        searchBox.sendKeys("LambdaTest");
+        searchBox.sendKeys("HyperExecute");
         
         try {
             Thread.sleep(2000);
@@ -46,7 +46,7 @@ public class BingSearchSteps extends TestRunner
         }
         searchBox.sendKeys(Keys.ENTER);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class BingSearchSteps extends TestRunner
     @Then("^click on the first result$")
     public void click_on_the_first_result()
     {
-        WebElement secondCheckBox = driver.findElement(By.linkText("Most Powerful Cross Browser Testing Tool Online"));
+        WebElement secondCheckBox = driver.findElement(By.xpath("//a[contains(normalize-space(),'HyperExecute - AI-Powered Blazing Fast')]"));
         secondCheckBox.click();
         try {
             Thread.sleep(2000);
