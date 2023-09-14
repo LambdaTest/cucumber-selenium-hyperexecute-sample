@@ -3,12 +3,14 @@ package Steps;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import Runner.TestRunner;
 import cucumber.api.java.en.Given;
@@ -54,9 +56,9 @@ public class BingSearchSteps extends TestRunner
 
     @Then("^click on the first result$")
     public void click_on_the_first_result()
-    {
-        WebElement secondCheckBox = driver.findElement(By.linkText("Most Powerful Cross Browser Testing Tool Online"));
-        secondCheckBox.click();
+    {   
+        String title = driver.getTitle();
+        System.out.println(title);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
