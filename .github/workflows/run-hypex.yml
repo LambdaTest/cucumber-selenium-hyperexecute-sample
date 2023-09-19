@@ -19,4 +19,4 @@ jobs:
           chmod +x hyperexecute
           echo "Performing test"
           ./hyperexecute --user mohammadk --key rakcBoBYHiy8BW7osVi4N1LGYjgJhRfAwvL1pPUvwCA1wfNChd --config yaml/win/cucumber_hyperexecute_autosplit_sample.yaml --download-artifacts --force-clean-artifacts
-          echo "Test completion"
+          echo "Test completion!"
