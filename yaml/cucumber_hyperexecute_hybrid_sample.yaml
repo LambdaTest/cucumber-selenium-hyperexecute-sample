@@ -41,6 +41,12 @@ uploadArtefacts:
     path:
       - target/cucumber-reports/CucumberTestReport.json
 
+report: true
+partialReports:
+  location: target/cucumber-reports/
+  frameworkName: cucumber
+  type: json
+
 linuxTestRunnerCommand: mvn test -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dcucumber.options="--tags $test"
 winTestRunnerCommand: mvn test `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dcucumber.options="--tags $test"
 macTestRunnerCommand: mvn test -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dcucumber.options="--tags $test"

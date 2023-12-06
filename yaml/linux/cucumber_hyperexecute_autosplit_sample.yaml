@@ -41,6 +41,12 @@ uploadArtefacts:
     path:
       - target/cucumber-reports/CucumberTestReport.json
 
+report: true
+partialReports:
+  location: target/cucumber-reports/
+  frameworkName: cucumber
+  type: json
+
 testDiscovery:
   type: raw
   mode: dynamic
