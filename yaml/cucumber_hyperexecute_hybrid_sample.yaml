@@ -1,0 +1,52 @@
+version: 0.1
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
+
+runson: ${matrix.os}
+retryOnFailure: false
+autosplit: true
+maxRetries: 1
+parallelism: 2
+concurrency: 2
+
+matrix:
+  os: [mac, win, linux]
+
+env:
+  CACHE_DIR: m2_cache_dir
+
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - ${CACHE_DIR}
+
+testDiscovery:
+    type: raw
+    mode: dynamic
+    command: grep -nri '@' src/main/java/Features --include=\*.feature | sed 's/^.*://'
+
+pre:
+  - mvn -Dmaven.repo.local=${CACHE_DIR} -Dmaven.test.skip=true clean install
+
+post:
+    - cat yaml/${matrix.os}/cucumber_hyperexecute_matrix_sample.yaml
+
+mergeArtifacts: true
+
+uploadArtefacts:
+  - name: XmlReports
+    path:
+      - target/surefire-reports/testng-results.xml
+  - name: JsonReports
+    path:
+      - target/cucumber-reports/CucumberTestReport.json
+
+report: true
+partialReports:
+  location: target/cucumber-reports/
+  frameworkName: cucumber
+  type: json
+
+linuxTestRunnerCommand: mvn test -Dplatname=linux -Dmaven.repo.local=m2_cache_dir -Dcucumber.options="--tags $test"
+winTestRunnerCommand: mvn test `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dcucumber.options="--tags $test"
+macTestRunnerCommand: mvn test -Dplatname=mac -Dmaven.repo.local=m2_cache_dir -Dcucumber.options="--tags $test"

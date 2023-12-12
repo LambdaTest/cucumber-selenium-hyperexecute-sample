@@ -43,6 +43,12 @@ uploadArtefacts:
     path:
       - target/cucumber-reports/CucumberTestReport.json
 
+report: true
+partialReports:
+  location: target/cucumber-reports/
+  frameworkName: cucumber
+  type: json
+
 testSuites:
   - mvn test `-Dplatname=win `-Dmaven.repo.local=m2_cache_dir `-Dcucumber.options="--tags $cucumbertag"
 
