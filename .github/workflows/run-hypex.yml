@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up environment
+      - name: Set up the environment
         run: |
           wget https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute
           chmod +x hyperexecute
