@@ -7,6 +7,10 @@ testSuiteStep: 150
 runson: win
 retryOnFailure: true
 
+runtime:
+  language: java
+  version: 21
+
 maxRetries: 1
 concurrency: 4
 

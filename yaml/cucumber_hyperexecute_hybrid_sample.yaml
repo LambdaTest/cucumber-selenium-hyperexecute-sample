@@ -10,6 +10,10 @@ maxRetries: 1
 parallelism: 2
 concurrency: 2
 
+runtime:
+  language: java
+  version: 21
+
 matrix:
   os: [mac, win, linux]
 
