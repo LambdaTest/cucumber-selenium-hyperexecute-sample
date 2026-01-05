@@ -5,8 +5,13 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.time.Duration;
 
 
 public class ToDoSteps extends TestRunner {
@@ -15,6 +20,7 @@ public class ToDoSteps extends TestRunner {
     @Given("^user is on home Page$")
     public void user_already_on_home_page() {
         System.out.println(driver.getCapabilities());
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://lambdatest.github.io/sample-todo-app/");
     }
 
@@ -37,7 +43,11 @@ public class ToDoSteps extends TestRunner {
 
     @Then("^verify added item$")
     public void verify_added_item() {
-        String item = driver.findElement(By.xpath("//input[@name='li6']/following-sibling::span")).getText();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        By addedItemLocator = By.xpath("//input[@name='li6']/following-sibling::span");
+        WebElement itemElement = wait.until(ExpectedConditions.visibilityOfElementLocated(addedItemLocator));
+
+        String item = itemElement.getText();
         Assert.assertTrue(item.contains("Yey, Let's add it to list"));
     }
 }
