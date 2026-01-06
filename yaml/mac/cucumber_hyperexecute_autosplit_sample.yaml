@@ -6,6 +6,10 @@ testSuiteStep: 90
 
 runson: mac
 
+runtime:
+  language: java
+  version: 21
+
 autosplit: true
 retryOnFailure: true
 

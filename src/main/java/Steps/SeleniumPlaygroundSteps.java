@@ -1,43 +1,37 @@
 package Steps;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import static org.testng.Assert.assertEquals;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.JavascriptExecutor;
-
 import Runner.TestRunner;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SeleniumPlaygroundSteps extends TestRunner
-{
+import java.time.Duration;
+
+public class SeleniumPlaygroundSteps extends TestRunner {
     public RemoteWebDriver driver = this.connection;
     String test_url = "https://www.lambdatest.com/selenium-playground/";
 
     @Given("^I go to Selenium Playground home page$")
-    public void user_on_selenium_playground_page()
-    {
+    public void user_on_selenium_playground_page() {
         System.out.println(driver.getCapabilities());
         driver.get(test_url);
     }
 
     @Then("^I Click on Input Form Link$")
-    public void click_on_input_form_link() throws InterruptedException
-    {
+    public void click_on_input_form_link() throws InterruptedException {
         WebElement element = driver.findElement(By.xpath("//a[.='Input Form Submit']"));
         element.click();
         Thread.sleep(2000);
     }
 
     @Then("^I enter items in the form$")
-    public void ThenEnterItems() throws InterruptedException
-    {
+    public void ThenEnterItems() throws InterruptedException {
         WebElement name = driver.findElement(By.xpath("//input[@id='name']"));
         name.sendKeys("Testing");
         Thread.sleep(2000);
@@ -85,28 +79,23 @@ public class SeleniumPlaygroundSteps extends TestRunner
     }
 
     @Then("^I click submit button$")
-    public void WhenClickSubmitButton() throws InterruptedException
-    {
+    public void WhenClickSubmitButton() throws InterruptedException {
         /* Click on the Submit button */
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#seleniumform > div.text-right.mt-20 > button"))); 
-        ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#seleniumform > div.text-right.mt-20 > button")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
         Thread.sleep(2000);
     }
 
     @Then("^I should verify if form submission was successful$")
-    public void ThenVerifySubmitSuccessful()
-    {
+    public void ThenVerifySubmitSuccessful() {
         /* Assert if the page contains a certain text */
         Boolean bValue = driver.getPageSource().contains
                 ("Thanks for contacting us, we will get back to you shortly");
 
-        if (bValue)
-        {
+        if (bValue) {
             System.out.println("Input Form Demo successful");
-        }
-        else
-        {
+        } else {
             System.out.println("Input Form Demo failed");
         }
     }
