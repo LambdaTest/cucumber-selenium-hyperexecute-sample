@@ -5,6 +5,10 @@ autosplit: true
 maxRetries: 1
 concurrency: 4
 
+runtime:
+  language: java
+  version: 21
+
 env:
   CACHE_DIR: m2_cache_dir
 
