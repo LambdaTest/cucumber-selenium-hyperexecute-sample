@@ -8,7 +8,6 @@ maxRetries: 2
 pre:
   - java -version
   - pwd
-  - python key.py ${PAT}
   - mvn -Dmaven.repo.local=m2_cache_dir -Dmaven.test.skip=true install
 uploadArtefacts:
  - name: Reports1
