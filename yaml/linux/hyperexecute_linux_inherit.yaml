@@ -5,7 +5,6 @@ base:
     - ./hyperexecute_linux_base.yaml
 runson: linux
 concurrency: 2
-dataJsonPath: ['src/datame.json', 'src/data1.json','me/data.json', 'data.json']
 post:
   - cat hyperexecute_linux.yaml
 jobLabel: [ '${DATE} - ${DAY}', "cucumber-java", "linux" ]
