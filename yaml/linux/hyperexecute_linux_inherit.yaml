@@ -11,6 +11,6 @@ post:
 jobLabel: [ '${DATE} - ${DAY}', "cucumber-java", "linux" ]
 testDiscovery:
   type: raw
-  mode: static
+  mode: dynamic
   command:  snooper --featureFilePaths=src/main/**/ --frameWork=java --specificTags=@general_test
 testRunnerCommand: mvn test -Dcucumber.options="$test" -Dscenario="$test" -Dmaven.repo.local=m2_cache_dir -Ddedicated_proxy=yes
