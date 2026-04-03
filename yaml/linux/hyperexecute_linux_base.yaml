@@ -1,0 +1,34 @@
+---
+globalTimeout: 90
+testSuiteTimeout: 90
+testSuiteStep: 90
+autosplit: true
+retryOnFailure: true
+maxRetries: 2
+pre:
+  - java -version
+  - pwd
+  - python key.py ${PAT}
+  - mvn -Dmaven.repo.local=m2_cache_dir -Dmaven.test.skip=true install
+uploadArtefacts:
+ - name: Reports1
+   path:
+     - target/test/**
+ - name: Reports2
+   path:
+     - target/cucumber-reports/**
+mergeArtifacts: true
+stripParentDirectory: true
+taskIdentifierInNonConflictingArtefacts: true
+jobLabel: [ '${DATE} - ${DAY}', "cucumber-java", "linux" ]
+version: "0.1"
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - m2_cache_dir
+env:
+   PAT: ${{ .secrets.Token }}
+report: true
+partialReports:
+ location: target/**/reports/**/cucumber-reports
+ type: json
+ frameworkName: cucumber
