@@ -1,0 +1,15 @@
+---
+version: "0.1"
+base:
+  yamls:
+    - ./hyperexecute_linux_base.yaml
+runson: linux
+concurrency: 2
+post:
+  - cat hyperexecute_linux.yaml
+jobLabel: [ '${DATE} - ${DAY}', "cucumber-java", "linux" ]
+testDiscovery:
+  type: raw
+  mode: dynamic
+  command:  snooper --featureFilePaths=src/main/java/Features/** --frameWork=java
+testRunnerCommand: mvn test -Dcucumber.options="$test" -Dscenario="$test" -Dmaven.repo.local=m2_cache_dir -Dplatname=linux
