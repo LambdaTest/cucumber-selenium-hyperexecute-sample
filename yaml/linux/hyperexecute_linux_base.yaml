@@ -24,8 +24,6 @@ version: "0.1"
 cacheKey: '{{ checksum "pom.xml" }}'
 cacheDirectories:
   - m2_cache_dir
-env:
-   PAT: ${{ .secrets.Token }}
 report: true
 partialReports:
  location: target/**/reports/**/cucumber-reports
