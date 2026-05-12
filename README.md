@@ -30,7 +30,7 @@ If not signed up, you need to sign up and simultaneously redirected to Gitpod in
 
 
 
-# How to run Selenium automation tests on HyperExecute (using Cucumber framework) — TestMu AI (Formerly LambdaTest)
+# How to run Selenium automation tests on HyperExecute (using Cucumber framework) — TestMu AI (Formerly LambdaTest)
 
 * [Pre-requisites](#pre-requisites)
    - [Download HyperExecute CLI](#download-hyperexecute-cli)
