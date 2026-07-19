@@ -51,7 +51,7 @@ partialReports:
 
 testDiscovery:
   type: raw
-  mode: dynamic
+  mode: remote
   #Parallel execution at feature level
   #command: grep -rni 'Features' -e 'Feature:' | sed 's/.*://'
   command: grep -nri '@' src/main/java/Features --include=\*.feature | sed 's/^.*://'

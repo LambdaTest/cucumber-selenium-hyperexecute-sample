@@ -26,7 +26,7 @@ cacheDirectories:
 
 testDiscovery:
     type: raw
-    mode: dynamic
+    mode: remote
     command: grep -nri '@' src/main/java/Features --include=\*.feature | sed 's/^.*://'
 
 pre:
