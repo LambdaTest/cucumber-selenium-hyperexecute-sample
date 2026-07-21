@@ -1,9 +1,7 @@
-Feature: Add new item to ToDo list
+Feature: Selenium Playground Simple Form
 
 @ToDo
-  Scenario: LambdaTest ToDo Scenario
-    Given user is on home Page
-    When select First Item
-    Then select second item
-    Then add new item
-    Then verify added item
+Scenario: Verify Simple Form Demo
+  Given user is on Selenium Playground
+  When user enters a message
+  Then the message should be displayed

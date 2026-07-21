@@ -44,8 +44,8 @@ public class TestRunner {
         MutableCapabilities browserOptions;
         if (browser.equalsIgnoreCase("chrome")) {
             browserOptions = new ChromeOptions();
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            browserOptions = new FirefoxOptions();
+        // } else if (browser.equalsIgnoreCase("firefox")) {
+        //     browserOptions = new FirefoxOptions();
         } else if (browser.equalsIgnoreCase("Microsoft Edge")) {
             browserOptions = new EdgeOptions();
         } else {
