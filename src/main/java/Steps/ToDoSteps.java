@@ -13,41 +13,38 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-
 public class ToDoSteps extends TestRunner {
+
     public RemoteWebDriver driver = this.connection;
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-    @Given("^user is on home Page$")
-    public void user_already_on_home_page() {
+    @Given("^user is on Selenium Playground$")
+    public void user_is_on_selenium_playground() {
+
         System.out.println(driver.getCapabilities());
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://lambdatest.github.io/sample-todo-app/");
+
+        driver.get("https://www.lambdatest.com/selenium-playground/simple-form-demo");
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-message")));
     }
 
-    @When("^select First Item$")
-    public void select_first_item() {
-        driver.findElement(By.name("li1")).click();
+    @When("^user enters a message$")
+    public void user_enters_a_message() {
+
+        String message = "Hello TestMu AI";
+
+        driver.findElement(By.id("user-message")).sendKeys(message);
+
+        driver.findElement(By.id("showInput")).click();
     }
 
-    @Then("^select second item$")
-    public void select_second_item() {
-        driver.findElement(By.name("li2")).click();
-    }
+    @Then("^the message should be displayed$")
+    public void the_message_should_be_displayed() {
 
-    @Then("^add new item$")
-    public void add_new_item() {
-        driver.findElement(By.id("sampletodotext")).clear();
-        driver.findElement(By.id("sampletodotext")).sendKeys("Yey, Let's add it to list");
-        driver.findElement(By.id("addbutton")).click();
-    }
+        WebElement output = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(By.id("message"))
+        );
 
-    @Then("^verify added item$")
-    public void verify_added_item() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        By addedItemLocator = By.xpath("//input[@name='li6']/following-sibling::span");
-        WebElement itemElement = wait.until(ExpectedConditions.visibilityOfElementLocated(addedItemLocator));
-
-        String item = itemElement.getText();
-        Assert.assertTrue(item.contains("Yey, Let's add it to list"));
+        Assert.assertEquals(output.getText(), "Hello TestMu AI");
     }
 }
