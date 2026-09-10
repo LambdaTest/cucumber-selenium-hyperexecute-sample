@@ -13,7 +13,7 @@
 With TestMu AI (Formerly LambdaTest), you can run Java Cucumber tests on the HyperExecute cloud for blazing-fast distributed execution with auto-split and matrix strategies. This sample shows how to configure HyperExecute to run Cucumber Selenium tests on the TestMu AI cloud.
 
 - [Sign up on TestMu AI](https://www.testmuai.com/register/) (Formerly LambdaTest).
-- Follow the [TestMu AI Documentation](https://www.testmuai.com/support/docs/cucumber-on-hyperexecute-grid/) for the full setup walkthrough.
+- Follow the [Run Cucumber tests on HyperExecute](https://www.testmuai.com/support/docs/cucumber-on-hyperexecute-grid/) for the full setup walkthrough.
 
 ### Prerequisites
 
