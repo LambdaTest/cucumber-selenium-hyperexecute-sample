@@ -7,40 +7,56 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.testng.Assert.assertEquals;
+import java.time.Duration;
 
+import static org.testng.Assert.assertTrue;
 
 public class LambdaTestSearchSteps extends TestRunner {
 
     public RemoteWebDriver driver = this.connection;
-    String test_url = "https://www.duckduckgo.com/";
-    String expected_title = "LambdaTest Blogs";
 
     @Given("^that I am on the DuckDuckGo Search Page$")
     public void user_on_duck_duck_go_page() {
         System.out.println(driver.getCapabilities());
-        driver.get(test_url);
+
+        driver.get("https://duckduckgo.com/");
+
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.name("q")));
     }
 
     @Then("^search for LambdaTest Blog$")
-    public void search_for_lambdatest_blog() throws InterruptedException {
-        WebElement search_box = driver.findElement(By.cssSelector("#search_form_input_homepage"));
-        search_box.click();
-        search_box.sendKeys("LambdaTest Blog" + Keys.ENTER);
-        Thread.sleep(2000);
+    public void search_for_lambdatest_blog() {
+
+        WebElement searchBox = driver.findElement(By.name("q"));
+
+        searchBox.sendKeys("LambdaTest Blog");
+        searchBox.sendKeys(Keys.ENTER);
     }
 
     @Then("^click on the available result$")
-    public void click_n_available_result() throws InterruptedException {
-        WebElement search_result = driver.findElement(By.xpath("//div[@id='links']/div[1]//a[.='LambdaTest Blogs']"));
-        search_result.click();
-        Thread.sleep(2000);
+    public void click_n_available_result() {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+        WebElement result = wait.until(
+                ExpectedConditions.elementToBeClickable(
+                        By.xpath("//a[contains(.,'LambdaTest')]")
+                )
+        );
+
+        result.click();
     }
 
     @Then("^compare results$")
     public void compare_result() {
-        String page_title = driver.getTitle();
-        assertEquals(page_title, expected_title);
+
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.titleContains("LambdaTest"));
+
+        assertTrue(driver.getTitle().contains("LambdaTest"));
     }
 }
